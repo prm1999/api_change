@@ -1,0 +1,31 @@
+{
+  "name": "api_change",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000a\u0000p\u0000i\u0000_\u0000c\u0000h\u0000a\u0000n\u0000g\u0000e\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "start:prod": "NODE_ENV=production nodemon server.js",
+    "test": "jest"
+
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prm1999/api_change.git"
+  },
+  "author": "pradeep",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/prm1999/api_change/issues"
+  },
+  "homepage": "https://github.com/prm1999/api_change#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
