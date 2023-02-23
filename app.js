@@ -29,7 +29,6 @@ const getAllTours=(req,res)=>{
 
 }
 
-app.get('/api/v1/tours',getAllTours)
 
 // for get api on the basis of the id
 const getTour=(req,res)=>{
@@ -62,7 +61,6 @@ const getTour=(req,res)=>{
     })
 
 }
-app.get('/api/v1/tours/:id',getTour)
 
 
 
@@ -90,7 +88,6 @@ const createTour=(req,res)=>{
 
 }
 
-app.post('/api/v1/tours',createTour);
 
 const deleteTour=(req,res)=>{
 
@@ -108,7 +105,6 @@ const deleteTour=(req,res)=>{
     })
 }
 
-app.delete('/api/v1/tours/:id',deleteTour);
 
 // for delete options
 const updateTour=(req,res)=>{
@@ -129,7 +125,13 @@ const updateTour=(req,res)=>{
         }
     })
 }
+app.post('/api/v1/tours',createTour);
+app.get('/api/v1/tours/:id',getTour)
+app.get('/api/v1/tours',getAllTours)
 app.patch('/api/v1/tours/:id',updateTour);
+app.delete('/api/v1/tours/:id',deleteTour);
+
+
 
 // server creation
 const port =3000;
