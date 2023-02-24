@@ -69,9 +69,5 @@ app.use('/api/v1/tours',tourRouter);
 app.use('/api/v1/user',userRouter);
 
 
-// server creation
-const port =3000;
-app.listen(port,()=>{
-    console.log(`App runing in the port ${port}`);
-})
 
+module.exports=app;
