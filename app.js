@@ -11,9 +11,12 @@ const userRouter=require('./router/userRouter');
 
 const app=express();
 
+// MIDDLEWARE
+if(process.env.NODE_ENV==='development')
+    {
+        app.use(morgan('dev'));
 
-app.use(morgan('dev'));
-
+    }
 // middleware for convert post data in the json format
 app.use(express.json());
 

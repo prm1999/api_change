@@ -7,7 +7,17 @@ const fs=require('fs');
 // middleware
 
 
+// importing data
+
+const tours=JSON.parse(
+    fs.readFileSync(`${__dirname}/../data/simple.json`)
+)
+
+
+
 exports.checkID=(req,res,next,val)=>{
+    console.log(`Tour is ${val}`);
+
     if(req.params.id>tours.length){
         return res.status(404).json({
             status:'fail',
@@ -16,11 +26,19 @@ exports.checkID=(req,res,next,val)=>{
     }
     next();//it is important put next
 }
-// importing data
 
-const tours=JSON.parse(
-    fs.readFileSync(`${__dirname}/../data/simple.json`)
-)
+// first send request and then send the response
+exports.checkBody=(req,res,next)=>{
+    if(!req.body.name || !req.body.price){
+        return res.status(400).json({
+            status:'fail',
+            message:'Missing name and price'
+        });
+    }
+    next();
+};
+
+
 
 // for get api
 exports.getAllTours=(req,res)=>{
