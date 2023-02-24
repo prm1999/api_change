@@ -4,10 +4,7 @@ const tourController=require('../controller/tourController')
 const router=express.Router();
 
 
-router.param('id',(req,res,next,val)=>{
-    console.log(`Tour id is ${id}`);
-    next();
-})
+router.param('id',tourController.checkID);
 
 
 

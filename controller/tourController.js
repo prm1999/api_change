@@ -47,12 +47,12 @@ exports.getTour=(req,res)=>{
 
 
     const tour_id=tours.find(el=>el.id===id);
-    if(!tour_id){
-        return res.status(404).json({
-            status:'fail',
-            message:"invalid Id"
-        });
-    }
+    // if(!tour_id){
+    //     return res.status(404).json({
+    //         status:'fail',
+    //         message:"invalid Id"
+    //     });
+    // }
 
     res.status(200).json({
         status:'success',
@@ -93,12 +93,12 @@ exports.createTour=(req,res)=>{
 
 exports.deleteTour=(req,res)=>{
 
-    if(req.params.id*1>tours.length){
-        return res.status(404).json({
-            status:'fail',
-            message:"invalid Id"
-        });
-    }
+    // if(req.params.id*1>tours.length){
+    //     return res.status(404).json({
+    //         status:'fail',
+    //         message:"invalid Id"
+    //     });
+    // }
 
 
     res.status(204).json({
@@ -111,13 +111,13 @@ exports.deleteTour=(req,res)=>{
 // for delete options
 exports.updateTour=(req,res)=>{
 
-    const id=req.params.id*1;
-    if(id>tours.length){
-        return res.status(404).json({
-            status:'fail',
-            message:"invalid Id"
-        });
-    }
+    // const id=req.params.id*1;
+    // if(id>tours.length){
+    //     return res.status(404).json({
+    //         status:'fail',
+    //         message:"invalid Id"
+    //     });
+    // }
 
 
     res.status(200).json({
