@@ -2,6 +2,20 @@
 const fs=require('fs');
 
 
+
+
+// middleware
+
+
+exports.checkID=(req,res,next,val)=>{
+    if(req.params.id>tours.length){
+        return res.status(404).json({
+            status:'fail',
+            message:'invalid'
+        })
+    }
+    next();//it is important put next
+}
 // importing data
 
 const tours=JSON.parse(
