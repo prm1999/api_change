@@ -1,4 +1,5 @@
 const mongoose=require('mongoose');
+const validator=require('validator');
 
 // Create the schema for the user
 
