@@ -30,6 +30,41 @@ mongoose.connect(process.env.DATABASE_LOCAL,{
     console.log("DB connected succesfully")
 })
 
+
+// creating the schema
+const tourSchema=new mongoose.Schema({
+    name:{
+        type:String,
+        require:[true,"A tour name"],
+        unique:true
+    },
+    rating:{
+        type:Number,
+        default:4.5,
+
+    },
+    price:{
+        type:Number,
+        require:[true,"A tour have a price"]
+    }
+})
+
+const Tour=mongoose.model("Tour",tourSchema);
+
+// manually data to the model
+const testTour=new Tour({
+    name:"The forest ",
+    rating:4.7,
+    price:678
+});
+
+testTour.save().then(doc=>{
+    console.log(doc);
+})
+.catch(err=>{
+    console.log('Err',err);
+})
+
 // server creation
 const port =process.env.PORT||3000;
 app.listen(port,()=>{
