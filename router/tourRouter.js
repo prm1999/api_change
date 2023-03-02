@@ -3,9 +3,9 @@ const tourController=require('./../controller/tourController')
 const router=express.Router();
 
 
-router.param('id',tourController.checkID);
+// router.param('id',tourController.checkID);
 
-
+// use param intead of  id
 
 
 router
