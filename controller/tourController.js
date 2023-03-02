@@ -15,13 +15,25 @@ const Tour=require('./../models/tourModel');
 exports.getAllTours=async (req,res)=>{
 
     try{
+        // BUILD QUERY
+        const queryObj={...req.query};
+        const excludeFiled=['page','sort','limit','field'];
+        excludeFiled.forEach(ele=>delete queryObj[ele]);
 
+
+        const query= Tour.find(queryObj);
             // find is use for the find all the document
-    const tours=await Tour.find();
 
-
+            // filter
+    // const tours=await Tour.find()
+    // .where('duration')
+    // .equals(5)
+    // .where('difficulty')
+    // .equals('easy');
+// EXECUATE QUERY
+const tours=await query;
     // console.log(req.requestTime);
-
+// SEND RESPONSE
     res.status(200).json({
 
         status:'success',
