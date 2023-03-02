@@ -12,23 +12,57 @@ const Tour=require('./../models/tourModel');
 
 
 // for get api
-exports.getAllTours=(req,res)=>{
+exports.getAllTours=async (req,res)=>{
 
-    console.log(req.requestTime);
+    try{
+
+            // find is use for the find all the document
+    const tours=await Tour.find();
+
+
+    // console.log(req.requestTime);
 
     res.status(200).json({
+
         status:'success',
+        results:tours.length,
+        data:{
+            tours
+        }
     })
+
+    }catch(err){
+        res.status(200).json.json({
+            status:'fail',
+            message:err
+        })
+    }
+    
 
 }
 
 
 // for get api on the basis of the id
-exports.getTour=(req,res)=>{
-    console.log(req.params);
+exports.getTour=async (req,res)=>{
 
-    const id=req.params.id*1;
+    try{
+        // find by id is use by find using the id
+        const tours=await Tour.findById(req.parm.id)
+        // Tour.findOne({__id:req.param.id})
+        res.status(200).json({
 
+            status:'success',
+            results:tours.length,
+            data:{
+                tours
+            }
+        })
+    }catch(err){
+        res.status(200).json.json({
+            status:'fail',
+            message:err
+        })
+    }
 
 
 }
