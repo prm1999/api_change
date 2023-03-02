@@ -17,11 +17,22 @@ exports.getAllTours=async (req,res)=>{
     try{
         // BUILD QUERY
         const queryObj={...req.query};
-        const excludeFiled=['page','sort','limit','field'];
+        const excludeFiled=['page','sort','limit','fields'];
         excludeFiled.forEach(ele=>delete queryObj[ele]);
 
+        // // Advance filtering
+        // let  queryStr=JSON.stringify(queryObj);
+        // // console.log
+        // querystr=queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match=>`$ ${match}`);
+        // console.log(JSON.parse(querystr));
 
-        const query= Tour.find(queryObj);
+        let queryStr = JSON.stringify(queryObj);
+ 
+        queryStr = queryStr.replace(/\b(gte|te|lte|lt)\b/g, (match) => `$${match}`);
+         
+        console.log(JSON.parse(queryStr));
+
+
             // find is use for the find all the document
 
             // filter
@@ -30,6 +41,14 @@ exports.getAllTours=async (req,res)=>{
     // .equals(5)
     // .where('difficulty')
     // .equals('easy');
+
+    // console.log(req.query)
+
+    // I had the same issue and mine got fixed by replacing the const query = Tour.find(queryObj);  to const query = Tour.find(JSON.parse(queryStr)); just continue following the video.
+
+
+    const query= Tour.find(JSON.parse(queryStr));
+
 // EXECUATE QUERY
 const tours=await query;
     // console.log(req.requestTime);
