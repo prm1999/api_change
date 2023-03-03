@@ -1,88 +1,28 @@
-// importing file system
-// const fs=require('fs');
 // importing data from the model
 const Tour=require('./../models/tourModel');
 // Importing Utity Method
-const APIFeature =require('./../utils/apifeature')
-
-
+const APIFeatures =require('../utils/apiFeatures');
     // middleware
-    exports.aliasTopTours = (req, res, next) => {
-        req.query.limit = '5';
-        req.query.sort = '-ratingsAverage,price';
-        req.query.fields = 'name,price,ratingsAverage,summary,difficulty';
-        next();
-      };
+exports.aliasTopTours = (req, res, next) => {
+    req.query.limit = '5';
+    req.query.sort = '-ratingsAverage,price';
+    req.query.fields = 'name,price,ratingsAverage,summary,difficulty';
+    next();
+ };
       
 
     // for get api
 exports.getAllTours=async (req,res)=>{
-
-    try{
-        // BUILD QUERY
-        // const queryObj={...req.query};
-        // const excludeFiled=['page','sort','limit','fields'];
-        // excludeFiled.forEach(ele=>delete queryObj[ele]);
-
-        // // // Advance filtering
-        // let queryStr = JSON.stringify(queryObj);
- 
-        // queryStr = queryStr.replace(/\b(gte|te|lte|lt)\b/g, (match) => `$${match}`);
-         
-        // console.log(JSON.parse(queryStr));
-
-
-            // find is use for the find all the document
-
-            // filter
-            // I had the same issue and mine got fixed by replacing the const query = Tour.find(queryObj);  to const query = Tour.find(JSON.parse(queryStr)); just continue following the video.
-
-
-            // let query= Tour.find(JSON.parse(queryStr));
-
-            // Sorting
-            // if(req.query.sort){
-            //     const sortBy=req.query.sort.split(',').join(' ');
-            //     console.log(sortBy)
-            //     // sort first variable
-            //     query=query.sort(req.query.sort)
-            // }
-            // field limitation
-            // if(req.query.fields){
-            //     const fields=req.query.fields.split(',').join(' ');
-            //     query=query.select(fields);
-
-            // }
-            // else{
-            //     // for removing v
-            //     query=query.select('-__v');
-            // }
-            // Pagination page=2 & limit=10 1-10 page 1 10-20 page2
-            // const page=req.query.page*1||1;  
-            // const limit =req.query.limit*1||100;
-            // const skip=(page-1)*limit;  
-            // query=query.skip(skip).limit(limit);
-            // // Return number of document
-            // if (req.query.page){
-            //     const numTour=await Tour.countDocuments();
-            //     if(skip>=numTour) throw new Error('This page does not exist');
-
-            // }
-
-
-
-
+try{
 // EXECUATE QUERY
-// creating the update the things
-const feature=new APIFeature( Tour.find(),req.query)
+    const feature=new APIFeatures(Tour.find(),req.query)
                     .filter()
                     .sort()
                     .limitfilds()
-                    .pagginate()
-const tours=await feature.query;
+                    .pagginate();
+    const tours=await feature.query;
+    // console.log(tours)
 
-    // const tours=await query;
-    // console.log(req.requestTime);
 // SEND RESPONSE
     res.status(200).json({
 
