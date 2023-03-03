@@ -7,7 +7,13 @@ const Tour=require('./../models/tourModel');
 
 
     // middleware
-
+    exports.aliasTopTours = (req, res, next) => {
+        req.query.limit = '5';
+        req.query.sort = '-ratingsAverage,price';
+        req.query.fields = 'name,price,ratingsAverage,summary,difficulty';
+        next();
+      };
+      
 
 
 
@@ -64,6 +70,8 @@ exports.getAllTours=async (req,res)=>{
                 if(skip>=numTour) throw new Error('This page does not exist');
 
             }
+
+
 // EXECUATE QUERY
     const tours=await query;
     // console.log(req.requestTime);
