@@ -12,7 +12,7 @@ router
 
 // use param intead of  id
 
-
+router.route('/tour-static').get(tourController.getTourStats);
 router
     .route('/')
     .get(tourController.getAllTours)

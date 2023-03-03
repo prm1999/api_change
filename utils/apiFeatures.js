@@ -1,6 +1,6 @@
 
 // API FEATURE FOR ALL SORTING AND SARCHING
-class APIFeature{
+class APIFeatures{
     constructor(query,queryString){
         this.query=query;
         this.queryString=queryString;
@@ -13,9 +13,8 @@ class APIFeature{
 
         // // Advance filtering
         let queryStr = JSON.stringify(queryObj);
- 
         queryStr = queryStr.replace(/\b(gte|te|lte|lt)\b/g, (match) => `$${match}`);
-        this.query= Tour.find(JSON.parse(queryStr));
+        this.query= this.query.find(JSON.parse(queryStr));
         // for returning the entire object
         return this;
 
@@ -66,4 +65,4 @@ class APIFeature{
     }    
 }
 
-module.exports=APIFeature;
+module.exports=APIFeatures;
