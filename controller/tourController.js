@@ -6,12 +6,12 @@ const Tour=require('./../models/tourModel');
 
 
 
-// middleware
+    // middleware
 
 
 
 
-// for get api
+    // for get api
 exports.getAllTours=async (req,res)=>{
 
     try{
@@ -21,11 +21,6 @@ exports.getAllTours=async (req,res)=>{
         excludeFiled.forEach(ele=>delete queryObj[ele]);
 
         // // Advance filtering
-        // let  queryStr=JSON.stringify(queryObj);
-        // // console.log
-        // querystr=queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match=>`$ ${match}`);
-        // console.log(JSON.parse(querystr));
-
         let queryStr = JSON.stringify(queryObj);
  
         queryStr = queryStr.replace(/\b(gte|te|lte|lt)\b/g, (match) => `$${match}`);
@@ -36,21 +31,32 @@ exports.getAllTours=async (req,res)=>{
             // find is use for the find all the document
 
             // filter
-    // const tours=await Tour.find()
-    // .where('duration')
-    // .equals(5)
-    // .where('difficulty')
-    // .equals('easy');
-
-    // console.log(req.query)
-
-    // I had the same issue and mine got fixed by replacing the const query = Tour.find(queryObj);  to const query = Tour.find(JSON.parse(queryStr)); just continue following the video.
+            // I had the same issue and mine got fixed by replacing the const query = Tour.find(queryObj);  to const query = Tour.find(JSON.parse(queryStr)); just continue following the video.
 
 
-    const query= Tour.find(JSON.parse(queryStr));
+            let query= Tour.find(JSON.parse(queryStr));
 
+            // Sorting
+            if(req.query.sort){
+                const sortBy=req.query.sort.split(',').join(' ');
+                console.log(sortBy)
+                // sort first variable
+                query=query.sort(req.query.sort)
+            }
+            // field limitation
+            if(req.query.fields){
+                const fields=req.query.fields.split(',').join(' ');
+                query=query.select(fields);
+
+            }
+            else{
+                // for removing v
+                query=query.select('-__v');
+            }
+            // Pagination
+            
 // EXECUATE QUERY
-const tours=await query;
+    const tours=await query;
     // console.log(req.requestTime);
 // SEND RESPONSE
     res.status(200).json({
