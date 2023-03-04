@@ -3,7 +3,10 @@
 const express =require('express');
 // using for morgon 
 const morgan=require('morgan');
-
+// importing app error
+const AppErrors=require('./utils/appErrors')
+// importing yhe global Error
+const globalErrorHandler=require('./controller/errorController')
 const tourRouter=require('./router/tourRouter');
 const userRouter=require('./router/userRouter');
 
@@ -53,28 +56,19 @@ app.all('*',(req,res,next)=>{
     //     message:`can't find ${req.originalUrl} on this server`
 
     // })
-    // for unhandled route
-    const err=new Error(`can't find ${req.originalUrl} on this server`);
-    err.status='fail';
-    err.statusCode=404;
+    // for unhandled route and comented for using AppError 
+    // const err=new Error(`can't find ${req.originalUrl} on this server`);
+    // err.status='fail';
+    // err.statusCode=404;
     
     // next will do the things which will apply that next function error
     // next will be access the global handling error
-    next(err)
+    next(new AppErrors(`can't find ${req.originalUrl} on this server`))
 })
 
 // use middleware for the handling the error
-app.use((err,req,res,next)=>{
-    // Internal server error
-    err.statusCode=err.statusCode||500;
-    err.status=err.status||'error';
-
-
-    res.status(err.statusCode).json({
-        status:err.status,
-        message:err.message
-    });
-})
+// Applying the global controller
+app.use(globalErrorHandler)
 
 
 module.exports=app;
