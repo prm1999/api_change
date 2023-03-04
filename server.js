@@ -36,3 +36,13 @@ const port =process.env.PORT||3000;
 app.listen(port,()=>{
     console.log(`App runing in the port ${port}`);
 })
+
+
+
+
+
+
+
+
+// for running the debgger run 
+// npm run debug

@@ -13,6 +13,9 @@ router
 // use param intead of  id
 
 router.route('/tour-static').get(tourController.getTourStats);
+// for planned fiter per year
+router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
+
 router
     .route('/')
     .get(tourController.getAllTours)
