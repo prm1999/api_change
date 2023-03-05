@@ -70,34 +70,41 @@ exports.getTour=async (req,res)=>{
 
 }
 
+// Adding the cathing error as per async function
+const catchAync=fn=>{
+    return(req,res,next) =>{
+        fn(res,res,next).catch(next);
+    };
+};
 
 
 // for post api
-exports.createTour=async (req,res)=>{
-    try{
+exports.createTour=catchAync(async (req,res,next)=>{
+    // Instead of new tour and then save we require the save the tour
+    const newTour=await  Tour.create(req.body);
+
+    res.status(201).json({
+        status:'success',
+        data:{
+            tour:newTour
+        }
+    });
+    // try{
 
             // const newTour=new Tour({});
     //  Tour.save()
-    // Instead of new tour and then save we require the save the tour
-   const newTour=await  Tour.create(req.body);
-
-   res.status(201).json({
-       status:'success',
-       data:{
-           tour:newTour
-       }
-   });
-
-    }
-    catch(err){
-        res.status(400).json({
-            status:'fail',
-            message:err
-        })
-    }
 
 
-}
+    // }
+    // catch(err){
+    //     res.status(400).json({
+    //         status:'fail',
+    //         message:err
+    //     })
+    // }
+
+
+    });
 
 
 exports.updateTour=async(req,res)=>{
