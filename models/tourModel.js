@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-// const validator = require('validator');
+const validator = require('validator');
 
 const tourSchema = new mongoose.Schema(
   {
@@ -57,7 +57,7 @@ const tourSchema = new mongoose.Schema(
     summary: {
       type: String,
       trim: true,
-      required: [true, 'A tour must have a description']
+      // required: [true, 'A tour must have a description']
     },
     description: {
       type: String,
@@ -65,7 +65,7 @@ const tourSchema = new mongoose.Schema(
     },
     imageCover: {
       type: String,
-      required: [true, 'A tour must have a cover image']
+      // required: [true, 'A tour must have a cover image']
     },
     images: [String],
     createdAt: {
