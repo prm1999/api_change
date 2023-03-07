@@ -43,7 +43,7 @@ app.use((req,res,next)=>{
 
 // for user route
 
-
+// user and tours are the collection name for the mongodb
 app.use('/api/v1/tours',tourRouter);
 app.use('/api/v1/users',userRouter);
 
