@@ -1,9 +1,10 @@
 const mongoose=require('mongoose');
 const validator=require('validator');
+const bcrypt=require('bcryptjs');
 
 // Create the schema for the user
 
-const UserSchema= new mongoose.Schema({
+const userSchema= new mongoose.Schema({
     name:{
         type:String,
         require:[true,"please tell us your name"]
@@ -42,15 +43,26 @@ const UserSchema= new mongoose.Schema({
 })
 // preschema on Save
 
-UserSchema.pre('save',function(next){
+userSchema.pre('save',async function(next){
+    // Only run this function if password was actually modified
     // if password is not modified
-    if (this.isModified('password')) return next();
+    if (!this.isModified('password')) return next();
     // b script use for the encrpyt 
+    // Hash the password with cost of 12
+    this.password=await bcrypt.hash(this.password, 12);
+
+    // Delete passwordConfirm  field
+    this.passwordConfirm=undefined;
+
+    next();
+
 
 
 })
+
+
 // for creating the user Schema
-const User=mongoose.model("user",UserSchema);
+const User=mongoose.model("users",userSchema);
 
 
 module.exports=User;
