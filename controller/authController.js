@@ -60,3 +60,31 @@ exports.login=catchAsync (async(req,res,next)=>{
         })
     
 })
+
+
+
+exports.protect=catchAsync (async (req,res,next)=>{
+    // 1) get the token and check if this there
+    let token;
+    if(
+        req.headers.authorization &&
+         req.headers.authorization.startsWith('Bearer')
+    ){
+          token=req.headers.authorization.split(' ')[1];      
+    }
+    // console.log(token);
+
+    if(!token){
+        return next(new AppErrors("Your are not looged in ! Please log to the access",401));
+    }
+
+    // 2)validate the token&verification
+    jwt.verify(token,process.env.JWT_SECRET)
+    // 3) Check if the user is exist
+
+    // 4) check if user change the password
+
+    next()
+
+
+})
