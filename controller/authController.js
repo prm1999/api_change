@@ -1,3 +1,4 @@
+const { promisify }=require('util');
 const jwt=require('jsonwebtoken');
 const User=require('./../models/userModel');
 const catchAsync=require('./../utils/catchAsync')
@@ -75,11 +76,14 @@ exports.protect=catchAsync (async (req,res,next)=>{
     // console.log(token);
 
     if(!token){
-        return next(new AppErrors("Your are not looged in ! Please log to the access",401));
+        return next(
+            new AppErrors("Your are not looged in ! Please log to the access",401)
+            );
     }
 
     // 2)validate the token&verification
-    jwt.verify(token,process.env.JWT_SECRET)
+   const decoded= await promisify(jwt.verify)(token, process.env.JWT_SECRET) 
+    console.log(decoded)
     // 3) Check if the user is exist
 
     // 4) check if user change the password
