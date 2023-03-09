@@ -25,6 +25,8 @@ const userSchema= new mongoose.Schema({
         type:String,
         require:[true,"please provide a passowrd"],
         minlength:8,
+        select:false
+        // select false will not allow to show the password to all
 
     },
     passwordConfirm:{
@@ -59,7 +61,11 @@ userSchema.pre('save',async function(next){
 
 
 })
+// for decryping and comparing  the password
+userSchema.methods.correctPassword=async function(candidatePassword,UserPassword){
+    return await bcrypt.compare(candidatePassword,UserPassword);
 
+}
 
 // for creating the user Schema
 const User=mongoose.model("users",userSchema);
