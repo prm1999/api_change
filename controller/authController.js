@@ -111,3 +111,17 @@ exports.protect=catchAsync (async (req,res,next)=>{
 
 
 })
+
+
+// restrict tio the access
+exports.restrictTo=(...roles)=>{
+    return (req,res,next)=>{
+        // roles [admin,lead-guide] roles  for user
+        if(!roles.includes(req.user.role)){
+            return next(new AppErrors('You dont have the permission to do the work',403))            
+        }
+
+        next();
+    };
+
+}
