@@ -11,14 +11,14 @@ const signToken=id=>{
 }
 
 exports.signup=catchAsync( async(req,res,next)=>{
-    // const newUser = await User.create(req.body);
+    const newUser = await User.create(req.body);
 
-    const newUser = await User.create({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        passwordConfirm: req.body.passwordConfirm
-      });
+    // const newUser = await User.create({
+    //     name: req.body.name,
+    //     email: req.body.email,
+    //     password: req.body.password,
+    //     passwordConfirm: req.body.passwordConfirm
+    //   });
 
     const token=signToken(newUser._id);
     // jwt.sign({ id:newUser._id},process.env.JWT_SECRET,{
@@ -83,11 +83,30 @@ exports.protect=catchAsync (async (req,res,next)=>{
 
     // 2)validate the token&verification
    const decoded= await promisify(jwt.verify)(token, process.env.JWT_SECRET) 
-    console.log(decoded)
+    // console.log(decoded)
     // 3) Check if the user is exist
-
+    const currentUser = await User.findById(decoded.id);
+    if (!currentUser) {
+      return next(
+        new AppErrors(
+          'The user belonging to this token does no longer exist.',
+          401
+        )
+      );
+    }
+  
+  
     // 4) check if user change the password
+    if (currentUser.changedPasswordAfter(decoded.iat)) {
+        return next(
+          new AppErrors('User recently changed password! Please log in again.', 401)
+        );
+      }
+    
+      // GRANT ACCESS TO PROTECTED ROUTE
+      req.user = currentUser;
 
+      
     next()
 
 

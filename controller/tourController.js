@@ -203,14 +203,6 @@ exports.getTourStats=catchAsync(async(req,res)=>{
             }
         })
 
-
-    // }
-    // catch(err){
-    //     res.status(404).json({
-    //         status:'fail',
-    //         message:err
-    //     })
-    // }
 })
 
 // Monthly 
@@ -261,12 +253,6 @@ exports.getMonthlyPlan = catchAsync(async (req, res) => {
           plan
         }
       });
-    // } catch (err) {
-    //   res.status(404).json({
-    //     status: 'fail',
-    //     message: err
-    //   });
-    // }
   })
 
 
